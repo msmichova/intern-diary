@@ -1,5 +1,6 @@
 import { TextArea } from 'carbon-components-react';
 import React from 'react';
+import { Entries } from '../../App';
 
 const LandingPage = () => (
   <>
@@ -10,6 +11,10 @@ const LandingPage = () => (
     <br />
     <TextArea labelText="Question 3" placeholder="Your answer here..." />
     <br />
+    <div>
+      <h3>Database data:</h3>
+      <Entries />
+    </div>
   </>
 );
 
