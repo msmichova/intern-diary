@@ -1,32 +1,19 @@
-import { Button, Form, TextArea } from 'carbon-components-react';
+/* eslint-disable no-shadow */
+import {
+  Button,
+  Form,
+  TextArea,
+  DataTable,
+  Table,
+  TableHead,
+  TableRow,
+  TableHeader,
+  TableBody,
+  TableCell,
+} from 'carbon-components-react';
 import React, { useState } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { db } from '../../firebase';
-
-function Entries() {
-  // const dummy = useRef();
-  const entriesRef = db.collection('entries');
-  const query = entriesRef.limit(25);
-
-  const [entries] = useCollectionData(entriesRef, { idField: 'id' });
-
-  console.log({ entriesRef });
-  console.log({ entries });
-  return (
-    <>
-      <div>
-        {entries &&
-          entries.map((entry) => (
-            <div key={entry.id}>
-              <p>{entry.answer1}</p>
-              <p>{entry.answer2}</p>
-              <p>{entry.answer3}</p>
-            </div>
-          ))}
-      </div>
-    </>
-  );
-}
 
 const LandingPage = () => {
   const [answer1, setAnswer1] = useState('');
@@ -53,6 +40,24 @@ const LandingPage = () => {
     setAnswer2('');
     setAnswer3('');
   };
+
+  const [rows] = useCollectionData(db.collection('entries'), { idField: 'id' });
+  console.log(rows);
+
+  const headers = [
+    {
+      key: 'answer1',
+      header: 'Answer 1',
+    },
+    {
+      key: 'answer2',
+      header: 'Answer 2',
+    },
+    {
+      key: 'answer3',
+      header: 'Answer 3',
+    },
+  ];
 
   return (
     <>
@@ -81,9 +86,41 @@ const LandingPage = () => {
         <br />
         <Button type="submit">Submit</Button>
       </Form>
+      <br />
       <div>
         <h3>Database data:</h3>
-        <Entries />
+        {rows && (
+          <DataTable rows={rows} headers={headers}>
+            {({
+              rows,
+              headers,
+              getTableProps,
+              getHeaderProps,
+              getRowProps,
+            }) => (
+              <Table {...getTableProps()}>
+                <TableHead>
+                  <TableRow>
+                    {headers.map((header) => (
+                      <TableHeader {...getHeaderProps({ header })}>
+                        {header.header}
+                      </TableHeader>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows.map((row) => (
+                    <TableRow {...getRowProps({ row })}>
+                      {row.cells.map((cell) => (
+                        <TableCell key={cell.id}>{cell.value}</TableCell>
+                      ))}
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            )}
+          </DataTable>
+        )}
       </div>
     </>
   );
