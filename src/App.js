@@ -20,6 +20,26 @@ import RepoPage from './content/RepoPage';
 const firebaseAppAuth = auth;
 const providers = {
   googleProvider: new firebase.auth.GoogleAuthProvider(),
+  microsoftProvider: new firebase.auth.OAuthProvider('microsoft.com'),
+};
+
+const micosoftLogin = () => {
+  firebaseAppAuth
+    .signInWithPopup(providers.microsoftProvider)
+    .then((result) => {
+      // IdP data available in result.additionalUserInfo.profile.
+      // ...
+
+      /** @type {firebase.auth.OAuthCredential} */
+      const { credential } = result;
+
+      // OAuth access and id tokens can also be retrieved:
+      const { accessToken } = credential;
+      const { idToken } = credential;
+    })
+    .catch((error) => {
+      // Handle error.
+    });
 };
 
 // const firebaseApp = initializeApp({
@@ -40,7 +60,7 @@ const providers = {
 
 class App extends Component {
   render() {
-    const { user, signOut, signInWithGoogle } = this.props;
+    const { user, signOut, signInWithGoogle, signInWithPopup } = this.props;
     return (
       <>
         <TutorialHeader />
@@ -55,9 +75,14 @@ class App extends Component {
               Sign out
             </button>
           ) : (
-            <button type="button" onClick={signInWithGoogle}>
-              Sign in with Google
-            </button>
+            <>
+              <button type="button" onClick={signInWithGoogle}>
+                Sign in with Google
+              </button>
+              <button type="button" onClick={micosoftLogin}>
+                Sign in with Microsoft
+              </button>
+            </>
           )}
         </Content>
       </>

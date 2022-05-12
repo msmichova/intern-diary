@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-shadow */
 import {
@@ -21,7 +22,7 @@ const LandingPage = () => {
   // console.log({ user });
 
   const user = auth.currentUser;
-  const userEmail = user.email;
+  const userEmail = user?.email != null ? user.email : '';
   console.log({ user });
 
   const [answer1, setAnswer1] = useState('');
@@ -50,10 +51,16 @@ const LandingPage = () => {
     setAnswer3('');
   };
 
-  const [rows] = useCollectionData(
-    db.collection('entries').where('userEmail', '==', userEmail),
-    { idField: 'id' }
-  );
+  const admin = 'msmichova1@gmail.com';
+
+  // TODO: fix linting
+  const [rows] =
+    userEmail === admin
+      ? useCollectionData(db.collection('entries'), { idField: 'id' })
+      : useCollectionData(
+          db.collection('entries').where('userEmail', '==', userEmail),
+          { idField: 'id' }
+        );
   console.log(rows);
 
   const headers = [
