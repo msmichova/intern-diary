@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-shadow */
 import {
   Button,
@@ -13,9 +14,16 @@ import {
 } from 'carbon-components-react';
 import React, { useState } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { db } from '../../firebase';
+import { db, auth } from '../../firebase';
 
 const LandingPage = () => {
+  // const { user, signOut, signInWithGoogle } = props;
+  // console.log({ user });
+
+  const user = auth.currentUser;
+  const userEmail = user.email;
+  console.log({ user });
+
   const [answer1, setAnswer1] = useState('');
   const [answer2, setAnswer2] = useState('');
   const [answer3, setAnswer3] = useState('');
@@ -28,6 +36,7 @@ const LandingPage = () => {
         answer1,
         answer2,
         answer3,
+        userEmail,
       })
       .then((docRef) => {
         console.log('Document written with ID: ', docRef.id);
@@ -41,7 +50,10 @@ const LandingPage = () => {
     setAnswer3('');
   };
 
-  const [rows] = useCollectionData(db.collection('entries'), { idField: 'id' });
+  const [rows] = useCollectionData(
+    db.collection('entries').where('userEmail', '==', userEmail),
+    { idField: 'id' }
+  );
   console.log(rows);
 
   const headers = [
