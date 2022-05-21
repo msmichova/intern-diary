@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-shadow */
+import { FlashFilled16 } from '@carbon/icons-react';
 import {
   Button,
   Form,
@@ -13,7 +15,7 @@ import {
   TableBody,
   TableCell,
 } from 'carbon-components-react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { db, auth } from '../../firebase';
 
@@ -29,9 +31,28 @@ const LandingPage = () => {
   const [answer2, setAnswer2] = useState('');
   const [answer3, setAnswer3] = useState('');
 
+  const [isInvalid1, setIsInvalid1] = useState(false);
+  const [isInvalid2, setIsInvalid2] = useState(false);
+  const [isInvalid3, setIsInvalid3] = useState(false);
+
+  const isValid = (answer1, answer2, answer3) => {
+    answer1 === '' ? setIsInvalid1(true) : setIsInvalid1(false);
+    answer2 === '' ? setIsInvalid2(true) : setIsInvalid2(false);
+    answer3 === '' ? setIsInvalid3(true) : setIsInvalid3(false);
+
+    if (!isInvalid1 || !isInvalid2 || !isInvalid3) {
+      console.log({ answer1, answer2, answer3 });
+      console.log({ isInvalid1, isInvalid2, isInvalid3 });
+      console.log('INVALID');
+      return false;
+    }
+    console.log('VALID');
+    return true;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    // if (isValid(answer1, answer2, answer3)) {
     db.collection('entries')
       .add({
         answer1,
@@ -50,6 +71,7 @@ const LandingPage = () => {
     setAnswer2('');
     setAnswer3('');
   };
+  // };
 
   const admin = 'msmichova1@gmail.com';
 
@@ -87,6 +109,8 @@ const LandingPage = () => {
           placeholder="Your answer here..."
           value={answer1}
           onChange={(e) => setAnswer1(e.target.value)}
+          invalid={isInvalid1}
+          invalidText="Please answer this question."
         />
         <br />
         <TextArea
@@ -94,6 +118,8 @@ const LandingPage = () => {
           placeholder="Your answer here..."
           value={answer2}
           onChange={(e) => setAnswer2(e.target.value)}
+          invalid={isInvalid2}
+          invalidText="Please answer this question."
         />
         <br />
         <TextArea
@@ -101,6 +127,8 @@ const LandingPage = () => {
           placeholder="Your answer here..."
           value={answer3}
           onChange={(e) => setAnswer3(e.target.value)}
+          invalid={isInvalid3}
+          invalidText="Please answer this question."
         />
         <br />
         <Button type="submit">Submit</Button>

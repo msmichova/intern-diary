@@ -20,8 +20,14 @@ import {
 } from '@carbon/icons-react';
 import { Link } from 'react-router-dom';
 import { link } from 'fs';
+import { PropTypes } from 'carbon-components-react/lib/components/ListBox';
+import styledComponents from 'styled-components';
 
-const TutorialHeader = () => (
+const UserIconStyled = styledComponents.img`
+  border-radius: 50%;
+`;
+
+const TutorialHeader = ({ user }) => (
   <HeaderContainer
     render={({ isSideNavExpanded, onClickSideNavExpand }) => (
       <>
@@ -32,13 +38,11 @@ const TutorialHeader = () => (
             onClick={onClickSideNavExpand}
             isActive={isSideNavExpanded}
           />
-          <HeaderName element={Link} to="/" prefix="IBM">
-            Carbon Tutorial
-          </HeaderName>
+          <HeaderName element={Link} to="/" prefix="Intern Diary" />
           <HeaderNavigation aria-label="Carbon Tutorial">
-            <HeaderMenuItem element={link} to="/repos">
+            {/* <HeaderMenuItem element={link} to="/repos">
               Repositories
-            </HeaderMenuItem>
+            </HeaderMenuItem> */}
           </HeaderNavigation>
           <SideNav
             aria-label="Side navigation"
@@ -47,26 +51,33 @@ const TutorialHeader = () => (
           >
             <SideNavItems>
               <HeaderSideNavItems>
-                <HeaderMenuItem href="/repos">Repositories</HeaderMenuItem>
+                <HeaderMenuItem href="/entries">Entries</HeaderMenuItem>
+                <HeaderMenuItem href="/questions">
+                  Submit a New Report
+                </HeaderMenuItem>
               </HeaderSideNavItems>
             </SideNavItems>
           </SideNav>
           {/* <HeaderGlobalBar /> */}
           <HeaderGlobalBar>
-            <HeaderGlobalAction aria-label="Notifications">
-              <Notification20 />
-            </HeaderGlobalAction>
-            <HeaderGlobalAction aria-label="User Avatar">
-              <UserAvatar20 />
-            </HeaderGlobalAction>
-            <HeaderGlobalAction aria-label="App Switcher">
-              <AppSwitcher20 />
-            </HeaderGlobalAction>
+            {user && (
+              <HeaderGlobalAction aria-label="User Avatar">
+                {user.photoURL ? (
+                  <UserIconStyled src={user.photoURL} width="20" alt="user" />
+                ) : (
+                  <UserAvatar20 />
+                )}
+              </HeaderGlobalAction>
+            )}
           </HeaderGlobalBar>
         </Header>
       </>
     )}
   />
 );
+
+TutorialHeader.propTypes = {
+  user: PropTypes.object,
+};
 
 export default TutorialHeader;

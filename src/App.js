@@ -14,6 +14,7 @@ import { db, auth } from './firebase';
 
 import TutorialHeader from './components/TutorialHeader';
 import LandingPage from './content/LandingPage';
+import EntriesPage from './content/EntriesPage';
 import RepoPage from './content/RepoPage';
 
 // const firebaseApp = firebase.initializeApp(db);
@@ -63,25 +64,26 @@ class App extends Component {
     const { user, signOut, signInWithGoogle, signInWithPopup } = this.props;
     return (
       <>
-        <TutorialHeader />
+        <TutorialHeader user={user} />
         <Content>
           <Switch>
             <Route exact path="/" component={LandingPage} />
             <Route path="/repos" component={RepoPage} />
+            <Route path="/entries" component={EntriesPage} />
           </Switch>
           {user ? <p>Hello, {user.displayName}</p> : <p>Please sign in.</p>}
           {user ? (
-            <button type="button" onClick={signOut}>
+            <Button type="button" onClick={signOut}>
               Sign out
-            </button>
+            </Button>
           ) : (
             <>
-              <button type="button" onClick={signInWithGoogle}>
+              <Button type="button" onClick={signInWithGoogle}>
                 Sign in with Google
-              </button>
-              <button type="button" onClick={micosoftLogin}>
+              </Button>
+              <Button type="button" onClick={micosoftLogin}>
                 Sign in with Microsoft
-              </button>
+              </Button>
             </>
           )}
         </Content>
