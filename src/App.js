@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './App.scss';
@@ -6,18 +5,22 @@ import { Button, Content } from 'carbon-components-react';
 import withFirebaseAuth from 'react-with-firebase-auth';
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import { db, auth } from './firebase';
-
-// import { initializeApp } from 'firebase/app';
-// import { getAuth, onAuthStateChanged } from 'firebase/auth';
-// import { getFirestore, doc, getDoc, collection } from 'firebase/firestore';
-
+import styledComponents from 'styled-components';
+import PropTypes from 'prop-types';
+import { auth } from './firebase';
 import TutorialHeader from './components/TutorialHeader';
 import LandingPage from './content/LandingPage';
 import EntriesPage from './content/EntriesPage';
-import RepoPage from './content/RepoPage';
+import QuestionsPage from './content/QuestionsPage';
 
-// const firebaseApp = firebase.initializeApp(db);
+const StyledFooter = styledComponents.footer`
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+`;
+
 const firebaseAppAuth = auth;
 const providers = {
   googleProvider: new firebase.auth.GoogleAuthProvider(),
@@ -29,8 +32,6 @@ const micosoftLogin = () => {
     .signInWithPopup(providers.microsoftProvider)
     .then((result) => {
       // IdP data available in result.additionalUserInfo.profile.
-      // ...
-
       /** @type {firebase.auth.OAuthCredential} */
       const { credential } = result;
 
@@ -43,22 +44,6 @@ const micosoftLogin = () => {
     });
 };
 
-// const firebaseApp = initializeApp({
-//   apiKey: 'AIzaSyBofzgGY8U6Htz2Nn5VpoASsmBp3st6bKg',
-//   authDomain: 'intern-diary.firebaseapp.com',
-//   projectId: 'intern-diary',
-//   storageBucket: 'intern-diary.appspot.com',
-//   messagingSenderId: '524723505945',
-//   appId: '1:524723505945:web:173dd0877a43cc9bfb9388',
-//   measurementId: 'G-VGTPRL3Y91',
-// });
-// const auth = getAuth(firebaseApp);
-// onAuthStateChanged(auth, (user) => {
-//   // Check for user status
-// });
-
-// const firestore = getFirestore();
-
 class App extends Component {
   render() {
     const { user, signOut, signInWithGoogle, signInWithPopup } = this.props;
@@ -68,10 +53,11 @@ class App extends Component {
         <Content>
           <Switch>
             <Route exact path="/" component={LandingPage} />
-            <Route path="/repos" component={RepoPage} />
+            <Route path="/questions" component={QuestionsPage} />
             <Route path="/entries" component={EntriesPage} />
           </Switch>
-          {user ? <p>Hello, {user.displayName}</p> : <p>Please sign in.</p>}
+        </Content>
+        <StyledFooter>
           {user ? (
             <Button type="button" onClick={signOut}>
               Sign out
@@ -86,7 +72,7 @@ class App extends Component {
               </Button>
             </>
           )}
-        </Content>
+        </StyledFooter>
       </>
     );
   }
@@ -96,3 +82,10 @@ export default withFirebaseAuth({
   providers,
   firebaseAppAuth,
 })(App);
+
+App.propTypes = {
+  user: PropTypes.object,
+  signOut: PropTypes.func,
+  signInWithGoogle: PropTypes.func,
+  signInWithPopup: PropTypes.func,
+};

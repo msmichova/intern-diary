@@ -1,11 +1,5 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable no-shadow */
-/* eslint-disable react-hooks/rules-of-hooks */
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
-  Button,
-  Form,
-  TextArea,
   DataTable,
   Table,
   TableHead,
@@ -35,28 +29,30 @@ export default function EntriesPage() {
   const headers = [
     {
       key: 'answer1',
-      header: 'Answer 1',
+      header: 'What did you work on today?',
     },
     {
       key: 'answer2',
-      header: 'Answer 2',
+      header: 'What are you planning to do tomorrow?',
     },
     {
       key: 'answer3',
-      header: 'Answer 3',
+      header: 'Have you had any issues?',
     },
   ];
 
   return (
     <div>
-      <h3>
-        {user
-          ? userEmail === admin
-            ? "All Students' Entries"
-            : 'My Entries'
-          : 'Please log in to view entries'}
-        :
-      </h3>
+      {user ? (
+        userEmail === admin ? (
+          <h1>All Students' Entries</h1>
+        ) : (
+          <h1>My Entries</h1>
+        )
+      ) : (
+        <h1>Please log in to view entries</h1>
+      )}
+      <br />
       {user && rows && (
         <DataTable rows={rows} headers={headers}>
           {({ rows, headers, getTableProps, getHeaderProps, getRowProps }) => (

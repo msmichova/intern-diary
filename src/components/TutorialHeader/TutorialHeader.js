@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Button,
   Header,
   HeaderContainer,
   HeaderName,
@@ -13,14 +14,9 @@ import {
   SideNavItems,
   HeaderSideNavItems,
 } from 'carbon-components-react';
-import {
-  AppSwitcher20,
-  Notification20,
-  UserAvatar20,
-} from '@carbon/icons-react';
+import { UserAvatar20 } from '@carbon/icons-react';
 import { Link } from 'react-router-dom';
-import { link } from 'fs';
-import { PropTypes } from 'carbon-components-react/lib/components/ListBox';
+import PropTypes from 'prop-types';
 import styledComponents from 'styled-components';
 
 const UserIconStyled = styledComponents.img`
@@ -39,11 +35,7 @@ const TutorialHeader = ({ user }) => (
             isActive={isSideNavExpanded}
           />
           <HeaderName element={Link} to="/" prefix="Intern Diary" />
-          <HeaderNavigation aria-label="Carbon Tutorial">
-            {/* <HeaderMenuItem element={link} to="/repos">
-              Repositories
-            </HeaderMenuItem> */}
-          </HeaderNavigation>
+          <HeaderNavigation aria-label="Carbon Tutorial" />
           <SideNav
             aria-label="Side navigation"
             expanded={isSideNavExpanded}
@@ -58,16 +50,18 @@ const TutorialHeader = ({ user }) => (
               </HeaderSideNavItems>
             </SideNavItems>
           </SideNav>
-          {/* <HeaderGlobalBar /> */}
+
           <HeaderGlobalBar>
             {user && (
-              <HeaderGlobalAction aria-label="User Avatar">
-                {user.photoURL ? (
-                  <UserIconStyled src={user.photoURL} width="20" alt="user" />
-                ) : (
-                  <UserAvatar20 />
-                )}
-              </HeaderGlobalAction>
+              <>
+                <HeaderGlobalAction aria-label="User Avatar">
+                  {user.photoURL ? (
+                    <UserIconStyled src={user.photoURL} width="20" alt="user" />
+                  ) : (
+                    <UserAvatar20 />
+                  )}
+                </HeaderGlobalAction>
+              </>
             )}
           </HeaderGlobalBar>
         </Header>

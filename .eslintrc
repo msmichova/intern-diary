@@ -1,3 +1,8 @@
 {
-    "extends": [ "wesbos" ]
+    "extends": [ "wesbos" ],
+    "rules": {
+        "no-shadow" : "warn",
+        "react-hooks/rules-of-hooks" : "warn",
+        "no-nested-ternary": "warn"
+    }
 }
