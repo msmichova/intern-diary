@@ -35,7 +35,13 @@
       "react-app",
       "react-app/jest",
       "wesbos"
-    ]
+    ],
+    "rules" : {
+        "no-shadow" : "warn",
+        "react-hooks/rules-of-hooks" : "warn",
+        "no-nested-ternary": "warn",
+        "no-unused-vars": "warn"
+    }
   },
   "browserslist": {
     "production": [

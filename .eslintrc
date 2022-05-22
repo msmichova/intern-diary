@@ -3,6 +3,7 @@
     "rules": {
         "no-shadow" : "warn",
         "react-hooks/rules-of-hooks" : "warn",
-        "no-nested-ternary": "warn"
+        "no-nested-ternary": "warn",
+        "no-unused-vars": "warn"
     }
 }
