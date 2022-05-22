@@ -1,3 +1,6 @@
+/* eslint-disable vars-on-top */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-var */
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './App.scss';
@@ -27,21 +30,27 @@ const providers = {
   microsoftProvider: new firebase.auth.OAuthProvider('microsoft.com'),
 };
 
+providers.microsoftProvider.setCustomParameters({
+  prompt: 'consent',
+  tenant: 'f8cdef31-a31e-4b4a-93e4-5f571e91255a',
+});
+
 const micosoftLogin = () => {
   firebaseAppAuth
     .signInWithPopup(providers.microsoftProvider)
     .then((result) => {
       // IdP data available in result.additionalUserInfo.profile.
       /** @type {firebase.auth.OAuthCredential} */
-      const { credential } = result;
+      var { credential } = result;
       console.log({ credential });
 
       // OAuth access and id tokens can also be retrieved:
-      // const { accessToken } = credential;
-      // const { idToken } = credential;
+      // var { accessToken } = credential;
+      // var { idToken } = credential;
     })
     .catch((error) => {
       // Handle error.
+      console.log({ error });
     });
 };
 
