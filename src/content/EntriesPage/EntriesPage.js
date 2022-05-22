@@ -43,15 +43,13 @@ export default function EntriesPage() {
 
   return (
     <div>
-      {user ? (
-        userEmail === admin ? (
-          <h1>All Students' Entries</h1>
-        ) : (
-          <h1>My Entries</h1>
-        )
+      {userEmail === admin ? (
+        <h1>All Students' Diary Entries</h1>
       ) : (
-        <h1>Please log in to view entries</h1>
+        <h1>My Diary Entries</h1>
       )}
+      <br />
+      {!user && <p>Please log in to view diary entries</p>}
       <br />
       {user && rows && (
         <DataTable rows={rows} headers={headers}>

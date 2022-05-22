@@ -67,7 +67,7 @@ class App extends Component {
               <Button type="button" onClick={signInWithGoogle}>
                 Sign in with Google
               </Button>
-              <Button type="button" onClick={micosoftLogin}>
+              <Button type="button" kind="tertiary" onClick={micosoftLogin}>
                 Sign in with Microsoft
               </Button>
             </>

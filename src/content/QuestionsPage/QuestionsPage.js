@@ -86,7 +86,7 @@ export default function QuestionsPage() {
           <Button type="submit">Submit</Button>
         </Form>
       ) : (
-        'Log in to submit a report'
+        'Please log in to submit a report.'
       )}
     </>
   );
