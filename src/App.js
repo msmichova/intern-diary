@@ -34,7 +34,7 @@ const micosoftLogin = () => {
       // IdP data available in result.additionalUserInfo.profile.
       /** @type {firebase.auth.OAuthCredential} */
       const { credential } = result;
-      console.log({ result });
+      console.log({ credential });
 
       // OAuth access and id tokens can also be retrieved:
       // const { accessToken } = credential;
