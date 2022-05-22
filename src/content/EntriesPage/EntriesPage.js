@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/rules-of-hooks, no-unused-vars */
+/* eslint-disable react-hooks/rules-of-hooks, no-unused-vars, no-shadow */
 
 import React from 'react';
 import {
