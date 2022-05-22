@@ -87,5 +87,4 @@ App.propTypes = {
   user: PropTypes.object,
   signOut: PropTypes.func,
   signInWithGoogle: PropTypes.func,
-  signInWithPopup: PropTypes.func,
 };
