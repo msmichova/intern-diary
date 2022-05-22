@@ -36,8 +36,8 @@ const micosoftLogin = () => {
       const { credential } = result;
 
       // OAuth access and id tokens can also be retrieved:
-      const { accessToken } = credential;
-      const { idToken } = credential;
+      // const { accessToken } = credential;
+      // const { idToken } = credential;
     })
     .catch((error) => {
       // Handle error.
@@ -46,7 +46,7 @@ const micosoftLogin = () => {
 
 class App extends Component {
   render() {
-    const { user, signOut, signInWithGoogle, signInWithPopup } = this.props;
+    const { user, signOut, signInWithGoogle } = this.props;
     return (
       <>
         <TutorialHeader user={user} />

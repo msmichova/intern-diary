@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/rules-of-hooks, no-unused-vars */
+
 import React from 'react';
 import {
   DataTable,
